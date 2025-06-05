@@ -19,25 +19,44 @@ export default function SignUp() {
     const nickname = formData.get('nickname') as string;
 
     try {
-      const { data: { user }, error: signUpError } = await supabase.auth.signUp({
+      // メールアドレスとパスワードでサインアップ
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/profile`
+        }
       });
 
-      if (signUpError) throw signUpError;
-
-      if (user) {
-        // Create user profile
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert([{ user_id: user.id, nickname }]);
-
-        if (profileError) throw profileError;
-
-        navigate('/profile');
+      if (signUpError) {
+        throw new Error(signUpError.message === 'User already registered' 
+          ? 'このメールアドレスは既に登録されています'
+          : signUpError.message);
       }
+
+      if (!authData.user) {
+        throw new Error('ユーザー登録に失敗しました');
+      }
+
+      // ユーザープロフィールの作成
+      const { error: profileError } = await supabase
+        .from('users')
+        .insert([
+          {
+            user_id: authData.user.id,
+            nickname: nickname || null
+          }
+        ]);
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError);
+        throw new Error('プロフィールの作成に失敗しました');
+      }
+
+      navigate('/profile');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'エラーが発生しました');
+      console.error('Signup error:', err);
+      setError(err instanceof Error ? err.message : 'アカウント作成中にエラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -79,6 +98,7 @@ export default function SignUp() {
             name="password"
             type="password"
             required
+            minLength={6}
             className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
