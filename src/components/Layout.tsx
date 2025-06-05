@@ -1,59 +1,40 @@
-import React, { ReactNode } from 'react';
-import { Camera, Film, Home } from 'lucide-react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { User, LogOut } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
-interface LayoutProps {
-  children: ReactNode;
-  currentView: 'gallery' | 'recorder' | 'player';
-  onRecordClick: () => void;
-  onGalleryClick: () => void;
-}
+export default function Layout() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-export const Layout: React.FC<LayoutProps> = ({ 
-  children, 
-  currentView,
-  onRecordClick, 
-  onGalleryClick 
-}) => {
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/login');
+  };
+
+  const showHeader = location.pathname === '/profile';
+
   return (
-    <div className="flex flex-col h-screen bg-gray-900 text-white">
-      <header className="px-4 py-3 bg-gray-800 shadow-md">
-        <h1 className="text-xl font-bold text-center">ShortVideo</h1>
-      </header>
-      
-      <main className="flex-grow overflow-auto">
-        {children}
-      </main>
-      
-      {currentView !== 'player' && (
-        <footer className="bg-gray-800 py-3 px-4">
-          <nav className="flex justify-around items-center">
-            <button 
-              onClick={onGalleryClick}
-              className={`flex flex-col items-center ${currentView === 'gallery' ? 'text-blue-400' : 'text-gray-400'}`}
+    <div className="min-h-screen bg-gray-900 text-white">
+      {showHeader && (
+        <header className="bg-gray-800 p-4">
+          <div className="container mx-auto flex justify-between items-center">
+            <Link to="/profile" className="text-xl font-bold flex items-center gap-2">
+              <User size={24} />
+              <span>Profile</span>
+            </Link>
+            <button
+              onClick={handleSignOut}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
             >
-              <Home size={24} />
-              <span className="text-xs mt-1">Home</span>
+              <LogOut size={20} />
+              <span>Sign Out</span>
             </button>
-            
-            <button 
-              onClick={onRecordClick}
-              className="flex flex-col items-center"
-            >
-              <div className="relative rounded-full bg-blue-500 p-3 transform transition-transform hover:scale-110">
-                <Camera size={24} className="text-white" />
-              </div>
-            </button>
-            
-            <button 
-              onClick={onGalleryClick}
-              className={`flex flex-col items-center ${currentView === 'gallery' ? 'text-blue-400' : 'text-gray-400'}`}
-            >
-              <Film size={24} />
-              <span className="text-xs mt-1">Videos</span>
-            </button>
-          </nav>
-        </footer>
+          </div>
+        </header>
       )}
+      <main className="container mx-auto px-4 py-8">
+        <Outlet />
+      </main>
     </div>
   );
-};
+}
