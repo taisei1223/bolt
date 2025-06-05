@@ -18,16 +18,16 @@ export default function Layout() {
       {showHeader && (
         <header className="bg-gray-800 p-4">
           <div className="container mx-auto flex justify-between items-center">
-            <Link to="/profile\" className="text-xl font-bold flex items-center gap-2">
+            <Link to="/profile" className="text-xl font-bold flex items-center gap-2">
               <User size={24} />
-              <span>Profile</span>
+              <span>プロフィール</span>
             </Link>
             <button
               onClick={handleSignOut}
               className="flex items-center gap-2 px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
             >
               <LogOut size={20} />
-              <span>Sign Out</span>
+              <span>ログアウト</span>
             </button>
           </div>
         </header>

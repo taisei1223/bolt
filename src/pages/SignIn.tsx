@@ -27,7 +27,7 @@ export default function SignIn() {
 
       navigate('/profile');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -37,7 +37,7 @@ export default function SignIn() {
     <div className="max-w-md mx-auto">
       <div className="text-center mb-8">
         <LogIn size={48} className="mx-auto mb-4" />
-        <h1 className="text-3xl font-bold">Welcome Back</h1>
+        <h1 className="text-3xl font-bold">ログイン</h1>
       </div>
 
       {error && (
@@ -49,7 +49,7 @@ export default function SignIn() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email
+            メールアドレス
           </label>
           <input
             id="email"
@@ -62,7 +62,7 @@ export default function SignIn() {
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium mb-2">
-            Password
+            パスワード
           </label>
           <input
             id="password"
@@ -78,13 +78,13 @@ export default function SignIn() {
           disabled={loading}
           className="w-full py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? 'Signing in...' : 'Sign In'}
+          {loading ? 'ログイン中...' : 'ログイン'}
         </button>
 
         <p className="text-center text-gray-400">
-          Don't have an account?{' '}
+          アカウントをお持ちでない方は{' '}
           <Link to="/signup" className="text-blue-400 hover:text-blue-300">
-            Sign Up
+            新規登録
           </Link>
         </p>
       </form>

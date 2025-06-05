@@ -40,7 +40,7 @@ export default function Profile() {
       setProfile(data);
       setNickname(data.nickname || '');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -60,7 +60,7 @@ export default function Profile() {
       setProfile(prev => prev ? { ...prev, nickname } : null);
       setIsEditing(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -86,20 +86,20 @@ export default function Profile() {
     <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg p-6">
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-400">Email</label>
+          <label className="block text-sm font-medium text-gray-400">メールアドレス</label>
           <div className="mt-1 text-lg">{user?.email}</div>
         </div>
 
         <div>
           <div className="flex items-center justify-between">
-            <label className="block text-sm font-medium text-gray-400">Nickname</label>
+            <label className="block text-sm font-medium text-gray-400">ニックネーム</label>
             {!isEditing && (
               <button
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-2 text-blue-400 hover:text-blue-300"
               >
                 <Pencil size={16} />
-                <span>Edit</span>
+                <span>編集</span>
               </button>
             )}
           </div>
@@ -131,15 +131,15 @@ export default function Profile() {
             </div>
           ) : (
             <div className="mt-1 text-lg">
-              {profile?.nickname || 'No nickname set'}
+              {profile?.nickname || 'ニックネーム未設定'}
             </div>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400">Member Since</label>
+          <label className="block text-sm font-medium text-gray-400">登録日</label>
           <div className="mt-1 text-lg">
-            {new Date(profile?.created_at || '').toLocaleDateString()}
+            {new Date(profile?.created_at || '').toLocaleDateString('ja-JP')}
           </div>
         </div>
       </div>

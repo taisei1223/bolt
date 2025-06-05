@@ -37,7 +37,7 @@ export default function SignUp() {
         navigate('/profile');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'エラーが発生しました');
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export default function SignUp() {
     <div className="max-w-md mx-auto">
       <div className="text-center mb-8">
         <UserPlus size={48} className="mx-auto mb-4" />
-        <h1 className="text-3xl font-bold">Create Account</h1>
+        <h1 className="text-3xl font-bold">アカウント作成</h1>
       </div>
 
       {error && (
@@ -59,7 +59,7 @@ export default function SignUp() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email
+            メールアドレス
           </label>
           <input
             id="email"
@@ -72,7 +72,7 @@ export default function SignUp() {
 
         <div>
           <label htmlFor="password" className="block text-sm font-medium mb-2">
-            Password
+            パスワード
           </label>
           <input
             id="password"
@@ -85,7 +85,7 @@ export default function SignUp() {
 
         <div>
           <label htmlFor="nickname" className="block text-sm font-medium mb-2">
-            Nickname (Optional)
+            ニックネーム（任意）
           </label>
           <input
             id="nickname"
@@ -100,13 +100,13 @@ export default function SignUp() {
           disabled={loading}
           className="w-full py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          {loading ? 'Creating account...' : 'Sign Up'}
+          {loading ? 'アカウント作成中...' : 'アカウント作成'}
         </button>
 
         <p className="text-center text-gray-400">
-          Already have an account?{' '}
+          すでにアカウントをお持ちですか？{' '}
           <Link to="/login" className="text-blue-400 hover:text-blue-300">
-            Sign In
+            ログイン
           </Link>
         </p>
       </form>
