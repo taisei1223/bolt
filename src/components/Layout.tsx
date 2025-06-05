@@ -18,7 +18,7 @@ export default function Layout() {
       {showHeader && (
         <header className="bg-gray-800 p-4">
           <div className="container mx-auto flex justify-between items-center">
-            <Link to="/profile" className="text-xl font-bold flex items-center gap-2">
+            <Link to="/profile\" className="text-xl font-bold flex items-center gap-2">
               <User size={24} />
               <span>Profile</span>
             </Link>
